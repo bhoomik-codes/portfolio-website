@@ -1,0 +1,86 @@
+<%- include('partials/header') %>
+
+<section id="hero" class="hero" data-aos="zoom-in">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <h1>Hello, I’m <span>Bhoomik Sevta</span></h1>
+    <p>Developer | Designer | Creator</p>
+  </div>
+</section>
+
+<section class="about" data-aos="fade-up">
+  <div class="about-container">
+    <div class="about-image" data-aos="zoom-in">
+      <img src="/images/profile.png" alt="Bhoomik Sevta">
+    </div>
+
+    <div class="about-text" data-aos="fade-left" data-aos-delay="200">
+      <h2>About Me</h2>
+      <p>
+        I’m <span class="highlight">Bhoomik Sevta</span>, an aspiring 
+        <span class="highlight">AI-ML Developer</span> passionate about crafting intelligent systems 
+        and innovative web experiences. I enjoy transforming ideas into 
+        interactive applications — from AI chatbots to modern web apps.
+      </p>
+      <p>
+        My current focus areas include <span class="highlight">Natural Language Processing</span>, 
+        <span class="highlight">Generative AI</span>, and <span class="highlight">Full-Stack Web Development</span>. 
+        I love learning new tools and technologies that push the boundaries of creativity and automation.
+      </p>
+      <a href="/projects" class="btn">View My Work</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="projects" data-aos="fade-up">
+  <h2>My Projects</h2>
+  <div class="project-grid">
+
+    <div class="card" data-aos="flip-left">
+      <div class="card-img">
+        <img src="/images/rag-chatbot.avif" alt="RAG Chatbot Project">
+      </div>
+      <div class="card-content">
+        <h3>RAG Chatbot</h3>
+        <p>A conversational AI chatbot built with Rasa and integrated with multiple APIs for dynamic responses.</p>
+      </div>
+    </div>
+
+    <div class="card" data-aos="flip-left" data-aos-delay="200">
+      <div class="card-img">
+        <img src="/images/chat-with-me.avif" alt="Chat with Me App">
+      </div>
+      <div class="card-content">
+        <h3>Chat with Me</h3>
+        <p>A real-time web chat application built using Socket.io and Express with live user updates and typing indicators.</p>
+      </div>
+    </div>
+
+    <div class="card" data-aos="flip-left" data-aos-delay="400">
+      <div class="card-img">
+        <img src="/images/ai-image-generator.avif" alt="AI Image Generator">
+      </div>
+      <div class="card-content">
+        <h3>AI Image Generator</h3>
+        <p>An AI-powered image generation app using OpenAI's DALL·E API to create images from text prompts.</p>
+      </div>
+    </div>
+
+    <div class="card" data-aos="flip-left">
+      <div class="card-img">
+        <img src="/images/office-erp-system.png" alt="Office ERP System">
+      </div>
+      <div class="card-content">
+        <h3>Office ERP System</h3>
+        <p>A comprehensive attendance ERP system for marking attendance using face, voice, gesture, and location based geofencing.</p>
+      </div>
+    </div>
+
+
+
+  </div>
+</section>
+
+
+<%- include('partials/footer') %>
