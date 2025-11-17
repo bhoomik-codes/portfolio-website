@@ -1,21 +1,46 @@
+/* =========================================
+   1. GLOBAL STYLES & SCROLLBAR
+   ========================================= */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2196f3;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1976d2;
+}
+
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   background: #f9f9f9;
   color: #333;
   scroll-behavior: smooth;
+  overflow-x: hidden; /* Prevent horizontal scroll from animations */
 }
 
+/* =========================================
+   2. HEADER & NAVIGATION
+   ========================================= */
 header {
   position: fixed;
   top: 0;
   width: 100%;
-  background: white;
+  background: rgba(255, 255, 255, 0.95); /* Slightly transparent */
+  backdrop-filter: blur(10px); /* Modern glass effect */
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   display: flex;
   justify-content: center;
   padding: 1rem;
-  z-index: 10;
+  z-index: 100;
 }
 
 nav a {
@@ -23,59 +48,138 @@ nav a {
   text-decoration: none;
   color: #333;
   font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
+/* Navigation underline animation */
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: #2196f3;
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after,
+nav a.active::after {
+  width: 100%;
+}
+
+/* =========================================
+   3. GENERIC SECTIONS & PAGE HEADERS
+   ========================================= */
 section {
-  padding: 80px 40px; 
+  padding: 100px 40px;
 }
 
+.page-header {
+  padding-top: 120px;
+  padding-bottom: 50px;
+  background: linear-gradient(135deg, #f9f9f9 0%, #e3f2fd 100%);
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.page-header p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* =========================================
+   4. HERO SECTION (Unblur Effect)
+   ========================================= */
 .hero {
+  position: relative;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(120deg, #00bcd4, #2196f3);
   color: white;
-}
-
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
-}
-
-.card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-}
-.card img {
-  width: 100%;
-  border-radius: 8px;
-}
-.card h3 {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-}
-.card p {
-  font-size: 0.95rem;
-  color: #666;
-}
-footer {
   text-align: center;
-  padding: 1rem;
-  background: #222;
-  color: white;
+  overflow: hidden;
+  background: #222; /* Fallback */
 }
 
-/* ABOUT SECTION */
+/* Base clear image */
+.hero {
+  background: url('/images/back.jpg') center/cover no-repeat;
+}
+
+/* Blurred overlay layer */
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/images/back.png') center/cover no-repeat;
+  filter: blur(15px) brightness(0.5);
+  pointer-events: none;
+  z-index: 1;
+  /* The mask reveals the clear image underneath by hiding this blurred layer */
+  mask-image: radial-gradient(
+    circle 200px at var(--x, 50%) var(--y, 50%),
+    transparent 10%,
+    black 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle 200px at var(--x, 50%) var(--y, 50%),
+    transparent 10%,
+    black 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.hero span {
+  color: #4fc3f7;
+  text-shadow: 0 0 15px rgba(79, 195, 247, 0.5);
+}
+
+.hero p {
+  font-size: 1.5rem;
+  opacity: 0.9;
+  margin-top: 1rem;
+}
+
+/* =========================================
+   5. ABOUT SECTION (Sticky Profile)
+   ========================================= */
 .about-container {
   display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 3rem;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4rem;
   flex-wrap: wrap;
+  position: relative;
+}
+
+.about-image {
+  flex: 0 0 300px;
+  /* Sticky Implementation */
+  position: -webkit-sticky;
+  position: sticky;
+  top: 150px;
+  z-index: 2;
 }
 
 .about-image img {
@@ -83,97 +187,285 @@ footer {
   height: 300px;
   object-fit: cover;
   border-radius: 50%;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  transition: box-shadow 0.3s ease;
 }
 
 .about-text {
   flex: 1;
   max-width: 600px;
+  margin-bottom: 100px; 
 }
 
 .about-text h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.about-text h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 4px;
+  width: 50px;
+  background: #2196f3;
+  border-radius: 2px;
 }
 
 .about-text p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 1rem;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  color: #555;
 }
 
 .highlight {
   color: #2196f3;
   font-weight: 600;
+  background: rgba(33, 150, 243, 0.1);
+  padding: 2px 5px;
+  border-radius: 4px;
 }
 
 .btn {
   display: inline-block;
-  margin-top: 1rem;
-  padding: 0.75rem 1.5rem;
-  background-color: #2196f3;
+  margin-top: 2rem;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(45deg, #2196f3, #00bcd4);
   color: white;
   text-decoration: none;
-  border-radius: 8px;
-  transition: background 0.3s ease;
+  border-radius: 50px;
+  font-weight: 600;
+  box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn:hover {
-  background-color: #1976d2;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4);
 }
 
-/* PROJECTS SECTION */
+/* =========================================
+   6. PROJECTS SECTION & CARDS
+   ========================================= */
+.projects {
+  background: #fff;
+}
+
+.projects h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+}
+
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 3rem;
+  padding: 1rem;
 }
 
 .card {
   background: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  border-radius: 20px;
   overflow: hidden;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  will-change: transform; 
 }
 
 .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+  transform: translateY(-15px) scale(1.03) !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.card-img {
+  height: 220px;
+  overflow: hidden;
 }
 
 .card-img img {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
-  border-bottom: 2px solid #2196f3;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .card-img img {
+  transform: scale(1.1);
 }
 
 .card-content {
-  padding: 1.2rem;
+  padding: 1.5rem;
 }
 
 .card-content h3 {
-  margin-bottom: 0.5rem;
-  color: #222;
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
 }
 
-.card-content p {
+/* Projects Page: Filter Buttons */
+.filter-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 10px 25px;
+  border: 2px solid #2196f3;
+  background: transparent;
+  color: #2196f3;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: #2196f3;
+  color: white;
+  box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+}
+
+.card .tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  padding: 4px 12px;
+  background: #e3f2fd;
+  color: #1565c0;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.card-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #2196f3;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.card-link:hover { text-decoration: underline; }
+
+
+/* =========================================
+   7. CONTACT PAGE
+   ========================================= */
+.contact-section {
+  display: flex;
+  justify-content: center;
+  padding: 50px 20px;
+}
+
+.contact-container {
+  display: flex;
+  background: white;
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+
+/* Left Side: Info */
+.contact-info {
+  flex: 1;
+  background: #2196f3;
+  color: white;
+  padding: 40px;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contact-info h3 { font-size: 2rem; margin-bottom: 1rem; }
+.contact-info p { margin-bottom: 2rem; opacity: 0.9; }
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.social-links-large {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.social-btn {
+  color: #2196f3;
+  background: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+.social-btn:hover { transform: translateY(-3px); }
+
+/* Right Side: Form */
+.contact-form-wrapper {
+  flex: 1.5;
+  padding: 40px;
+  min-width: 320px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
   color: #555;
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-weight: 500;
 }
-@media (max-width: 768px) {
-  .about-container {
-    flex-direction: column;
-    text-align: center;
-  }
 
-  .about-image img {
-    width: 200px;
-    height: 200px;
-  }
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #2196f3;
+  outline: none;
+}
+
+.btn-submit {
+  width: 100%;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+}
+
+/* =========================================
+   8. FOOTER & UTILITIES
+   ========================================= */
+footer {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: #1a1a1a;
+  color: #888;
 }
 
 .scroll-top {
@@ -184,91 +476,75 @@ footer {
   color: white;
   border: none;
   border-radius: 50%;
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  z-index: 99;
 }
 
 .scroll-top.visible {
   opacity: 1;
-}
-.scroll-top:hover {
-  background: #1976d2;
+  transform: translateY(0);
 }
 
-/* === HERO SECTION WITH TRUE UNBLUR EFFECT === */
-.hero {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  color: white;
-  text-align: center;
+/* =========================================
+   9. RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .about-image {
+    position: relative; /* Disable sticky on mobile */
+    top: 0;
+    margin-bottom: 2rem;
+  }
+  .hero h1 { font-size: 2.5rem; }
+  
+  /* Contact adjustments */
+  .contact-container { flex-direction: column; }
+  .contact-info { padding: 30px; }
+  .contact-form-wrapper { padding: 30px; }
 }
-
-/* The unblurred background (base image) */
-.hero {
-  background: url('/images/back.jpg') center/cover no-repeat;
+/* =========================================
+   10. AOS OVERRIDES
+   ========================================= */
+[data-aos] {
+  opacity: 0;
+  transition-property: transform, opacity;
 }
-
-/* The blurred overlay layer */
-.hero-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('/images/back.png') center/cover no-repeat;
-  filter: blur(12px) brightness(0.6);
-  transition: filter 0.3s ease;
-  mask-image: radial-gradient(
-    circle 300px at var(--x, 50%) var(--y, 50%),
-    transparent 0%,
-    black 100%
-  );
-  -webkit-mask-image: radial-gradient(
-    circle 300px at var(--x, 50%) var(--y, 50%),
-    transparent 0%,
-    black 100%
-  );
-  mask-repeat: no-repeat;
-  -webkit-mask-repeat: no-repeat;
-  pointer-events: none;
-  z-index: 1;
+[data-aos].aos-animate {
+  opacity: 1;
 }
-
-.hero-content {
-  position: relative;
-  z-index: 2;
+[data-aos="fade-up"] {
+  transform: translateY(20px);
 }
-
-.hero h1 {
-  font-size: 3rem;
-  margin: 0;
+[data-aos="fade-up"].aos-animate {
+  transform: translateY(0);
 }
-
-.hero span {
-  color: #4fc3f7;
+[data-aos="fade-down"] {
+  transform: translateY(-20px);
 }
-
-.hero p {
-  font-size: 1.2rem;
-  opacity: 0.9;
+[data-aos="fade-down"].aos-animate {
+  transform: translateY(0);
 }
-/* Track mouse position */
-.hero {
-  --mouse-x: 50%;
-  --mouse-y: 50%;
+[data-aos="fade-left"] {
+  transform: translateX(-20px);
 }
-.hero:hover {
-  cursor: none;
+[data-aos="fade-left"].aos-animate {
+  transform: translateX(0);
 }
-/* Update spotlight position based on mouse */
-.hero:hover::after {
-  --x: var(--mouse-x);
-  --y: var(--mouse-y);
+[data-aos="fade-right"] {
+  transform: translateX(20px);
 }
+[data-aos="fade-right"].aos-animate {
+  transform: translateX(0);
+}
+/* End of styles.css */
