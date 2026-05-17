@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import ReactMarkdown from 'react-markdown';
 import { projects } from '@/data/portfolio';
 import type { Project } from '@/types';
 import styles from './Projects.module.css';
@@ -17,8 +18,22 @@ const FILTERS: { label: string; value: Category }[] = [
   { label: 'Tools',      value: 'tools' },
 ];
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function ProjectCard({ project, index, onClick }: { project: Project; index: number; onClick: () => void }) {
   const [hovered, setHovered] = useState(false);
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const nextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setCurrentImageIndex((prev) => (prev + 1) % project.images.length);
+  };
+
+  const prevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setCurrentImageIndex((prev) => (prev === 0 ? project.images.length - 1 : prev - 1));
+  };
 
   return (
     <motion.article
@@ -31,17 +46,31 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
       whileHover={{ y: -8 }}
+      onClick={onClick}
+      style={{ cursor: 'pointer' }}
     >
       {/* Image */}
       <div className={styles.cardImage}>
         <Image
-          src={project.image}
+          src={project.images[currentImageIndex]}
           alt={project.title}
           fill
           style={{ objectFit: 'cover' }}
           className={styles.img}
         />
         <div className={`${styles.imageOverlay} ${hovered ? styles.overlayVisible : ''}`} />
+
+        {project.images.length > 1 && (
+          <div className={`${styles.carouselControls} ${hovered ? styles.controlsVisible : ''}`}>
+            <button onClick={prevImage} className={styles.carouselBtn} aria-label="Previous image">❮</button>
+            <div className={styles.carouselDots}>
+              {project.images.map((_, i) => (
+                <span key={i} className={`${styles.dot} ${i === currentImageIndex ? styles.dotActive : ''}`} />
+              ))}
+            </div>
+            <button onClick={nextImage} className={styles.carouselBtn} aria-label="Next image">❯</button>
+          </div>
+        )}
 
         {project.featured && (
           <span className={`neon-badge blue ${styles.featuredBadge}`}>Featured</span>
@@ -58,7 +87,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               transition={{ duration: 0.2 }}
             >
               {project.githubUrl && (
-                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className={styles.hoverLink}>
+                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className={styles.hoverLink} onClick={(e) => e.stopPropagation()}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
                   </svg>
@@ -66,7 +95,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 </a>
               )}
               {project.liveUrl && (
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className={styles.hoverLink}>
+                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className={styles.hoverLink} onClick={(e) => e.stopPropagation()}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                     <polyline points="15 3 21 3 21 9"/>
@@ -102,10 +131,37 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 export default function Projects() {
   const [filter, setFilter] = useState<Category>('all');
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [readmeContent, setReadmeContent] = useState<string>('');
 
   const filtered = filter === 'all'
     ? projects
     : projects.filter(p => p.category === filter);
+
+  useEffect(() => {
+    if (selectedProject?.readmeUrl) {
+      fetch(selectedProject.readmeUrl)
+        .then((res) => {
+          if (!res.ok) throw new Error('Network response was not ok');
+          return res.text();
+        })
+        .then((text) => setReadmeContent(text))
+        .catch(() => setReadmeContent('Failed to load README.'));
+    } else {
+      setReadmeContent('');
+    }
+    
+    // Prevent scrolling when modal is open
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedProject]);
 
   return (
     <section id="projects" className={`section ${styles.projects}`}>
@@ -150,10 +206,45 @@ export default function Projects() {
         <motion.div className={styles.grid} layout>
           <AnimatePresence mode="popLayout">
             {filtered.map((p, i) => (
-              <ProjectCard key={p.id} project={p} index={i} />
+              <ProjectCard 
+                key={p.id} 
+                project={p} 
+                index={i} 
+                onClick={() => setSelectedProject(p)}
+              />
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* Modal */}
+        <AnimatePresence>
+          {selectedProject && (
+            <motion.div
+              className={styles.modalOverlay}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedProject(null)}
+            >
+              <motion.div
+                className={styles.modalContent}
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 50, opacity: 0 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button className={styles.closeBtn} onClick={() => setSelectedProject(null)}>×</button>
+                <div className={styles.markdownBody}>
+                  {selectedProject.readmeUrl ? (
+                    <ReactMarkdown>{readmeContent || 'Loading...'}</ReactMarkdown>
+                  ) : (
+                    <p>No README provided for this project.</p>
+                  )}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

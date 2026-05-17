@@ -5,11 +5,12 @@ export interface Project {
   longDescription: string;
   tags: string[];
   category: 'ai' | 'web' | 'tools' | 'fullstack';
-  image: string;
+  images: string[];
   githubUrl?: string;
   liveUrl?: string;
   featured: boolean;
   year: string;
+  readmeUrl?: string;
 }
 
 export interface Skill {

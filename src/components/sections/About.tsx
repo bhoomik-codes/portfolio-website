@@ -30,7 +30,7 @@ export default function About() {
             transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
           >
             <div className={styles.imageWrapper}>
-              <img src="/images/profile.png" alt="Bhoomik Sevta" className={styles.profileImg} />
+              <img src="/images/profile.jpg" alt="Bhoomik Sevta" className={styles.profileImg} />
               <div className={styles.imageGlow} />
               <div className={styles.imageFrame} />
             </div>

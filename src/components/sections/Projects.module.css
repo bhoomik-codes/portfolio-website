@@ -166,3 +166,133 @@
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
 }
+
+/* Carousel Controls */
+.carouselControls {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity var(--transition-fast, 150ms);
+}
+
+.controlsVisible {
+  opacity: 1;
+}
+
+.carouselBtn {
+  background: rgba(8,11,20,0.6);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s;
+  font-size: 0.8rem;
+}
+
+.carouselBtn:hover {
+  background: rgba(94,92,230,0.8);
+  border-color: rgba(94,92,230,1);
+}
+
+.carouselDots {
+  display: flex;
+  gap: 4px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  transition: background 0.2s, transform 0.2s;
+}
+
+.dotActive {
+  background: white;
+  transform: scale(1.2);
+}
+/* Modal Overlay */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(8,11,20,0.85);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.modalContent {
+  position: relative;
+  background: var(--glass-bg, rgba(20,24,40,0.95));
+  border: 1px solid var(--glass-border, rgba(94,92,230,0.4));
+  border-radius: var(--radius-lg, 20px);
+  padding: 40px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary, #A8A8B3);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.closeBtn:hover {
+  color: white;
+}
+
+/* Markdown Styles */
+.markdownBody {
+  color: var(--text-primary, #F8F8F2);
+  line-height: 1.6;
+}
+
+.markdownBody h1, .markdownBody h2, .markdownBody h3 {
+  color: white;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.markdownBody p {
+  margin-bottom: 1em;
+  color: var(--text-secondary, #A8A8B3);
+}
+
+.markdownBody ul {
+  padding-left: 20px;
+  margin-bottom: 1em;
+  color: var(--text-secondary, #A8A8B3);
+}
+
+.markdownBody li {
+  margin-bottom: 0.5em;
+}
