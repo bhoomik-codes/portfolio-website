@@ -1,7 +1,11 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import styles from './About.module.css';
+
+const RobotScene = dynamic(() => import('@/components/3d/RobotScene'), { ssr: false });
 
 const stats = [
   { value: '3+',  label: 'Years of\nCoding'    },
@@ -17,11 +21,22 @@ const techStack = [
 ];
 
 export default function About() {
+  const mousePos = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      mousePos.current.x = (e.clientX / window.innerWidth  - 0.5) * 2;
+      mousePos.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    window.addEventListener('mousemove', onMove);
+    return () => window.removeEventListener('mousemove', onMove);
+  }, []);
+
   return (
     <section id="about" className={`section ${styles.about}`}>
       <div className="container">
         <div className={styles.grid}>
-          {/* Image / Avatar */}
+          {/* 3D Scene */}
           <motion.div
             className={styles.imageSide}
             initial={{ opacity: 0, x: -60 }}
@@ -29,10 +44,8 @@ export default function About() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
           >
-            <div className={styles.imageWrapper}>
-              <img src="/images/profile.jpg" alt="Bhoomik Sevta" className={styles.profileImg} />
-              <div className={styles.imageGlow} />
-              <div className={styles.imageFrame} />
+            <div className={styles.sceneSide}>
+              <RobotScene mousePos={mousePos} />
             </div>
 
             {/* Stats */}

@@ -6,8 +6,6 @@ import dynamic from 'next/dynamic';
 import { socialLinks } from '@/data/portfolio';
 import styles from './Hero.module.css';
 
-const RobotScene = dynamic(() => import('@/components/3d/RobotScene'), { ssr: false });
-
 const ROLES = ['AI-ML Developer', 'Full-Stack Engineer', 'Creative Technologist'];
 
 function TypingText() {
@@ -65,17 +63,6 @@ const item: Variants = {
 };
 
 export default function Hero() {
-  const mousePos = useRef({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      mousePos.current.x = (e.clientX / window.innerWidth  - 0.5) * 2;
-      mousePos.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
-    };
-    window.addEventListener('mousemove', onMove);
-    return () => window.removeEventListener('mousemove', onMove);
-  }, []);
-
   return (
     <section id="hero" className={styles.hero}>
       {/* Background orbs */}
@@ -168,14 +155,18 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Right: 3D Scene */}
+        {/* Right: Profile Image */}
         <motion.div
-          className={styles.sceneSide}
+          className={styles.imageSide}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1], delay: 0.3 }}
         >
-          <RobotScene mousePos={mousePos} />
+          <div className={styles.imageWrapper}>
+            <img src="/images/profile.jpg" alt="Bhoomik Sevta" className={styles.profileImg} />
+            <div className={styles.imageGlow} />
+            <div className={styles.imageFrame} />
+          </div>
         </motion.div>
       </div>
 

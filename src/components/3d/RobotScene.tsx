@@ -14,9 +14,9 @@ function RobotHead({ mousePos }: { mousePos: React.MutableRefObject<{ x: number;
   useFrame(() => {
     if (!headRef.current) return;
     const { x, y } = mousePos.current;
-    // Smoothly rotate head toward cursor
-    headRef.current.rotation.y += (-x * 0.6 - headRef.current.rotation.y) * 0.05;
-    headRef.current.rotation.x += (y * 0.35 - headRef.current.rotation.x) * 0.05;
+    // Smoothly rotate head opposite to cursor
+    headRef.current.rotation.y += (x * 0.6 - headRef.current.rotation.y) * 0.05;
+    headRef.current.rotation.x += (-y * 0.35 - headRef.current.rotation.x) * 0.05;
 
     // Eye glow pulse
     const t = Date.now() * 0.003;
