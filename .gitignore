@@ -1,14 +1,35 @@
+# ── Dependencies ──────────────────────────
 node_modules/
+
+# ── Build outputs ─────────────────────────
 .next/
 out/
+
+# ── Environment & secrets ─────────────────
 .env
 .env.local
 .env.*.local
-package-lock.json
+
+# ── Dev tools ─────────────────────────────
 .DS_Store
 .vscode/
 .idea/
 *.log
 tsconfig.tsbuildinfo
+package-lock.json
+
+# ── AI agent files ────────────────────────
 AGENTS.md
 CLAUDE.md
+
+# ── Deployment & server config (local only)
+deploy.sh
+Caddyfile.bak
+Caddyfile_remote.bak
+oracle-cloud-context.md
+
+# ── Private documents ─────────────────────
+public/document/
+
+# ── Legacy / archived code ────────────────
+legacy/

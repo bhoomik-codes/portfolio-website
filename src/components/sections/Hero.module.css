@@ -63,34 +63,41 @@
   gap: 22px;
 }
 
-.badge {
-  display: inline-flex;
+.statusIndicator {
+  display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  background: rgba(57,255,20,0.08);
-  border: 1px solid rgba(57,255,20,0.25);
-  border-radius: 100px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--accent-green, #39FF14);
-  width: fit-content;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.statusLine {
+  height: 1px;
+  width: 32px;
+  background: var(--accent-blue, #5E5CE6);
+  box-shadow: 0 0 8px rgba(94,92,230,0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.statusLine::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+  animation: shimmer 2.5s infinite;
+}
+
+@keyframes shimmer {
+  100% { left: 100%; }
+}
+
+.statusText {
   font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.badgeDot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--accent-green, #39FF14);
-  box-shadow: 0 0 8px var(--accent-green, #39FF14);
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.5; transform: scale(0.85); }
+  letter-spacing: 0.15em;
+  color: var(--text-secondary, #A8A8B3);
 }
 
 .headline {

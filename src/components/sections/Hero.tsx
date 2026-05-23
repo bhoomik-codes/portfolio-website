@@ -78,9 +78,9 @@ export default function Hero() {
           initial="hidden"
           animate="show"
         >
-          <motion.div variants={item} className={styles.badge}>
-            <span className={styles.badgeDot} />
-            Available for opportunities
+          <motion.div variants={item} className={styles.statusIndicator}>
+            <div className={styles.statusLine} />
+            <span className={styles.statusText}>AVAILABLE FOR OPPORTUNITIES</span>
           </motion.div>
 
           <motion.h1 variants={item} className={styles.headline}>

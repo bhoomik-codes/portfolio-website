@@ -113,8 +113,8 @@ export default function About() {
             </div>
 
             <motion.a
-              href="/resume.pdf"
-              target="_blank"
+              href="/document/Bhoomik Resume.pdf"
+              download="Bhoomik_Sevta_Resume.pdf"
               rel="noopener noreferrer"
               className="btn-ghost"
               style={{ width: 'fit-content', marginTop: 8 }}
