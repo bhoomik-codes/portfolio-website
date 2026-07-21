@@ -132,7 +132,7 @@ export default function Hero() {
           <div className="profile-wrapper">
             <div className="profile-glow" />
             <Image
-              src="/images/profile.jpg"
+              src="/portfolio-website/images/profile.jpg"
               alt="Bhoomik Sevta"
               width={220}
               height={220}

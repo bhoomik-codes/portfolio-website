@@ -55,7 +55,7 @@ function RobotModel({ mousePos }: { mousePos: React.MutableRefObject<{ x: number
   }, [scene]);
 
   return (
-    <group ref={group} position={[0, -1.6, 0]}>
+    <group ref={group} position={[0, -2.5, 0]}>
       <primitive object={clonedScene} />
     </group>
   );

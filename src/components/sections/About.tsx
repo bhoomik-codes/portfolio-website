@@ -45,7 +45,7 @@ export default function About() {
             <div className="profile-wrapper" style={{ maxWidth: 380 }}>
               <div className="profile-glow" />
               <Image
-                src="/images/profile.jpg"
+                src="/portfolio-website/images/profile.jpg"
                 alt="Bhoomik Sevta"
                 width={380}
                 height={460}
