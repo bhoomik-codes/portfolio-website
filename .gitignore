@@ -16,7 +16,6 @@ out/
 .idea/
 *.log
 tsconfig.tsbuildinfo
-package-lock.json
 
 # ── AI agent files ────────────────────────
 AGENTS.md
