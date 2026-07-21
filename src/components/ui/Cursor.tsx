@@ -1,56 +1,68 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import styles from './Cursor.module.css';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Cursor() {
   const dotRef  = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
+    const dot  = dotRef.current;
+    const ring = ringRef.current;
+    if (!dot || !ring) return;
+
+    let dotX = 0, dotY = 0;
+    let ringX = 0, ringY = 0;
     let mouseX = 0, mouseY = 0;
-    let ringX  = 0, ringY  = 0;
-    let raf: number;
+    let rafId: number;
 
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-      }
     };
 
-    const animateRing = () => {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
-      }
-      raf = requestAnimationFrame(animateRing);
+    const onMouseEnterLink = () => setHovered(true);
+    const onMouseLeaveLink = () => setHovered(false);
+
+    const attachListeners = () => {
+      document.querySelectorAll('a, button, [data-cursor]').forEach(el => {
+        el.addEventListener('mouseenter', onMouseEnterLink);
+        el.addEventListener('mouseleave', onMouseLeaveLink);
+      });
     };
 
-    const onMouseEnterInteractive = () => ringRef.current?.classList.add(styles.hover);
-    const onMouseLeaveInteractive = () => ringRef.current?.classList.remove(styles.hover);
+    const loop = () => {
+      dotX  = mouseX;
+      dotY  = mouseY;
+      ringX += (mouseX - ringX) * 0.14;
+      ringY += (mouseY - ringY) * 0.14;
+
+      dot.style.transform  = `translate(${dotX}px, ${dotY}px) translate(-50%, -50%)`;
+      ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+
+      rafId = requestAnimationFrame(loop);
+    };
 
     document.addEventListener('mousemove', onMouseMove);
-    raf = requestAnimationFrame(animateRing);
+    attachListeners();
+    loop();
 
-    const interactives = document.querySelectorAll('a, button, [data-cursor-hover]');
-    interactives.forEach(el => {
-      el.addEventListener('mouseenter', onMouseEnterInteractive);
-      el.addEventListener('mouseleave', onMouseLeaveInteractive);
-    });
+    // Re-attach on DOM changes (for dynamic content)
+    const observer = new MutationObserver(attachListeners);
+    observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       document.removeEventListener('mousemove', onMouseMove);
-      cancelAnimationFrame(raf);
+      cancelAnimationFrame(rafId);
+      observer.disconnect();
     };
   }, []);
 
   return (
     <>
-      <div ref={dotRef}  className={`${styles.cursor} ${styles.dot}`}  />
-      <div ref={ringRef} className={`${styles.cursor} ${styles.ring}`} />
+      <div ref={dotRef} className="cursor-dot" style={{ position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9999 }} />
+      <div ref={ringRef} className={`cursor-ring ${hovered ? 'hovered' : ''}`} style={{ position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9998 }} />
     </>
   );
 }

@@ -4,14 +4,14 @@ import Projects from '@/components/sections/Projects';
 import Skills   from '@/components/sections/Skills';
 import Contact  from '@/components/sections/Contact';
 
-export default function HomePage() {
+export default function Home() {
   return (
     <>
-      <Hero     />
-      <About    />
+      <Hero />
+      <About />
       <Projects />
-      <Skills   />
-      <Contact  />
+      <Skills />
+      <Contact />
     </>
   );
 }

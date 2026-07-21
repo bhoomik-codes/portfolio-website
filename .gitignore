@@ -27,6 +27,7 @@ deploy.sh
 Caddyfile.bak
 Caddyfile_remote.bak
 oracle-cloud-context.md
+port-analysis.sh
 
 # ── Private documents ─────────────────────
 public/document/
