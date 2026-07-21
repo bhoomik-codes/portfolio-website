@@ -38,7 +38,7 @@ function RobotModel({ mousePos }: { mousePos: React.MutableRefObject<{ x: number
     group.current.rotation.x += (-y * 0.2 - group.current.rotation.x) * 0.04;
     // Subtle breathing
     const breathe = Math.sin(clock.elapsedTime * 0.8) * 0.01;
-    group.current.scale.setScalar(1.3 + breathe);
+    group.current.scale.setScalar(0.86 + breathe);
   });
 
   // Clone and set up materials to respect shadows
@@ -55,7 +55,7 @@ function RobotModel({ mousePos }: { mousePos: React.MutableRefObject<{ x: number
   }, [scene]);
 
   return (
-    <group ref={group} position={[0, -2.5, 0]}>
+    <group ref={group} position={[0, -1.8, 0]}>
       <primitive object={clonedScene} />
     </group>
   );
