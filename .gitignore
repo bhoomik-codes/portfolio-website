@@ -30,6 +30,7 @@ port-analysis.sh
 
 # ── Private documents ─────────────────────
 public/document/
+private_documents/
 
 # ── Legacy / archived code ────────────────
 legacy/

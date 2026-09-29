@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import Cursor from '@/components/ui/Cursor';
-import LoadingScreen from '@/components/ui/LoadingScreen';
 
 export const metadata: Metadata = {
   title: 'Bhoomik Sevta | AI-ML Developer & Full-Stack Engineer',
@@ -28,13 +26,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#04060f" />
+        <meta name="theme-color" content="#141311" />
+        <script dangerouslySetInnerHTML={{ __html: "try{document.documentElement.dataset.theme=localStorage.getItem('portfolio-theme')==='light'?'light':'dark'}catch(e){}" }} />
       </head>
       <body>
-        <LoadingScreen />
-        <div className="bg-radial" aria-hidden="true" />
-        <div className="bg-grid"   aria-hidden="true" />
-        <Cursor />
         <Navbar />
         <main>{children}</main>
         <Footer />

@@ -1,11 +1,10 @@
 'use client';
 
 import { useRef, useEffect, Suspense, useMemo } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import {
   useGLTF, useAnimations, Environment, Stars,
   Float, Sparkles, useProgress, Html, Trail,
-  MeshTransmissionMaterial,
 } from '@react-three/drei';
 import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
 import { BlendFunction } from 'postprocessing';
