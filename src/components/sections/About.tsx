@@ -7,7 +7,7 @@ export default function About() {
     <section id="about" className="story-section about-section">
       <div className="section-marker"><span>02</span><span>Learning</span></div>
       <div className="section-shell about-layout">
-        <div className="about-image-wrap">
+        <div className="about-image-wrap" data-reveal>
           <Image
             src="/portfolio-website/images/profile.jpg"
             alt="Bhoomik Sevta"
@@ -18,7 +18,7 @@ export default function About() {
           />
           <span className="image-caption">Curiosity compounds.</span>
         </div>
-        <div className="about-copy">
+        <div className="about-copy" data-reveal>
           <p className="eyebrow">A little about me</p>
           <h2>Learning by<br /><em>building things</em></h2>
           <p>I&apos;m Bhoomik, an AI/ML developer and full-stack engineer drawn to the space between useful software and ambitious ideas.</p>

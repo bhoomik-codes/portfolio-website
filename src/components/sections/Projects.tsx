@@ -38,7 +38,7 @@ export default function Projects() {
     <section id="projects" className="story-section projects-section">
       <div className="section-marker"><span>01</span><span>Experiments</span></div>
       <div className="section-shell">
-        <div className="section-heading-row">
+        <div className="section-heading-row" data-reveal>
           <div>
             <p className="eyebrow">Selected work · 2023—2026</p>
             <h2>Things I&apos;ve<br /><em>put into the world</em></h2>
@@ -60,7 +60,7 @@ export default function Projects() {
 
         <div className="project-list">
           {visibleProjects.map((project, index) => (
-            <article className={`project-item${index === 0 ? ' project-item-featured' : ''}`} key={project.id}>
+            <article className={`project-item${index === 0 ? ' project-item-featured' : ''}`} data-reveal key={project.id}>
               <button type="button" className="project-image-button" onClick={() => setSelected(project)} aria-label={`Read about ${project.title}`}>
                 <Image src={project.images[0]} alt={`${project.title} interface`} fill sizes="(max-width: 760px) 90vw, 48vw" />
                 <span className="project-image-index">{String(index + 1).padStart(2, '0')} / {String(visibleProjects.length).padStart(2, '0')}</span>

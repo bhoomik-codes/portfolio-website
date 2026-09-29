@@ -31,7 +31,7 @@ export default function Contact() {
     <section id="contact" className="story-section contact-section">
       <div className="section-marker"><span>04</span><span>Next horizon</span></div>
       <div className="section-shell contact-layout">
-        <div className="contact-copy">
+        <div className="contact-copy" data-reveal>
           <p className="eyebrow">A new beginning</p>
           <h2>What shall we<br /><em>build next?</em></h2>
           <p className="section-intro">Have an interesting problem, a role, or an idea you want to explore? I&apos;d like to hear about it.</p>
@@ -43,7 +43,7 @@ export default function Contact() {
           </div>
         </div>
 
-        <form className="contact-form" onSubmit={submit} noValidate>
+        <form className="contact-form" onSubmit={submit} noValidate data-reveal>
           <div className="form-pair">
             <label>Name<input autoComplete="name" value={form.name} onChange={event => update('name', event.target.value)} /></label>
             <label>Email<input type="email" autoComplete="email" value={form.email} onChange={event => update('email', event.target.value)} /></label>

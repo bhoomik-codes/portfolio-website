@@ -22,7 +22,7 @@ export default function Hero() {
       </div>
 
       <div className="hero-layout">
-        <div className="hero-copy">
+        <div className="hero-copy" data-reveal>
           <p className="eyebrow hero-eyebrow"><span /> Build / Learn / Explore / Repeat</p>
           <h1>Bhoomik<br /><span>Sevta</span></h1>
           <p className="hero-role">AI/ML &amp; Full-Stack Developer</p>
@@ -37,7 +37,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <nav className="chapter-list" aria-label="Journey chapters">
+        <nav className="chapter-list" aria-label="Journey chapters" data-reveal>
           {chapters.map(chapter => (
             <a href={chapter.href} key={chapter.number}>
               <span>{chapter.number}</span>{chapter.label}

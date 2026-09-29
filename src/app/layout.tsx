@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import ScrollMotion from '@/components/ui/ScrollMotion';
 
 export const metadata: Metadata = {
   title: 'Bhoomik Sevta | AI-ML Developer & Full-Stack Engineer',
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: "try{document.documentElement.dataset.theme=localStorage.getItem('portfolio-theme')==='light'?'light':'dark'}catch(e){}" }} />
       </head>
       <body>
+        <ScrollMotion />
         <Navbar />
         <main>{children}</main>
         <Footer />
