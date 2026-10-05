@@ -9,10 +9,10 @@ export default function About() {
       <div className="section-shell about-layout">
         <div className="about-image-wrap" data-reveal>
           <Image
-            src="/portfolio-website/images/profile.jpg"
-            alt="Bhoomik Sevta"
-            width={560}
-            height={680}
+            src="/portfolio-website/images/bhoomik-portrait.webp"
+            alt="Bhoomik Sevta smiling in a blue shirt"
+            width={1024}
+            height={1280}
             className="about-image"
             sizes="(max-width: 760px) 84vw, 42vw"
           />
