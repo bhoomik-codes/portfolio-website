@@ -200,11 +200,9 @@ button { color: inherit; }
 .tech-card { display: flex; min-width: 0; flex-direction: column; align-items: center; padding: 8px 5px 10px; text-align: center; border-radius: 8px; transition: transform 220ms ease, background-color 220ms ease; }
 .tech-card:hover { transform: translateY(-5px); background: color-mix(in srgb, var(--toolbox-orbit) 7%, transparent); }
 .tech-orb { display: grid; place-items: center; width: clamp(62px, 7vw, 78px); aspect-ratio: 1; margin-bottom: 10px; border: 1px solid var(--toolbox-line); border-radius: 50%; color: var(--toolbox-orbit); background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--toolbox-orbit) 22%, var(--toolbox-surface)), var(--toolbox-surface) 72%); box-shadow: inset 0 0 0 5px color-mix(in srgb, var(--toolbox-orbit) 4%, transparent), 0 6px 20px rgba(0, 0, 0, .08); transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease, color 220ms ease; }
-.tech-orb > span { font-family: var(--mono); font-size: .85rem; font-weight: 700; letter-spacing: -.06em; }
-.tech-card[data-group='frontend'] .tech-orb { color: #66cde2; }
-.tech-card[data-group='backend'] .tech-orb { color: #87c991; }
-.tech-card[data-group='ai'] .tech-orb { color: #e6a2c6; }
-.tech-card[data-group='workflow'] .tech-orb { color: #f2bb70; }
+.tech-logo { display: block; width: 38px; height: 38px; object-fit: contain; transition: transform 220ms ease; }
+.tech-logo.is-monochrome { filter: brightness(0) invert(1); }
+:root[data-theme='light'] .tech-logo.is-monochrome { filter: brightness(0); }
 .tech-card:hover .tech-orb { transform: scale(1.07); border-color: currentColor; box-shadow: inset 0 0 0 5px color-mix(in srgb, currentColor 7%, transparent), 0 0 24px var(--toolbox-glow); }
 .tech-name { color: var(--ink); font-size: .79rem; font-weight: 600; }
 .tech-note { margin-top: 3px; color: var(--ink-muted); font-size: .66rem; line-height: 1.4; }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState, type CSSProperties } from 'react';
+import Image from 'next/image';
 
 type TechGroup = 'frontend' | 'backend' | 'ai' | 'workflow';
 type Filter = 'all' | TechGroup;
@@ -13,22 +14,22 @@ const filters: { label: string; value: Filter }[] = [
   { label: 'Workflow', value: 'workflow' },
 ];
 
-const technologies: { name: string; mark: string; group: TechGroup; note: string }[] = [
-  { name: 'TypeScript', mark: 'TS', group: 'frontend', note: 'Typed interfaces' },
-  { name: 'React', mark: 'R', group: 'frontend', note: 'Component systems' },
-  { name: 'Next.js', mark: 'N', group: 'frontend', note: 'Web applications' },
-  { name: 'Three.js', mark: '3D', group: 'frontend', note: 'Interactive worlds' },
-  { name: 'Node.js', mark: 'JS', group: 'backend', note: 'Server-side tools' },
-  { name: 'PostgreSQL', mark: 'PG', group: 'backend', note: 'Relational data' },
-  { name: 'SQLite', mark: 'SQL', group: 'backend', note: 'Embedded storage' },
-  { name: 'Socket.io', mark: 'IO', group: 'backend', note: 'Real-time systems' },
-  { name: 'Python', mark: 'Py', group: 'ai', note: 'Prototypes to production' },
-  { name: 'NLP', mark: 'NLP', group: 'ai', note: 'Language technology' },
-  { name: 'LangChain', mark: 'LC', group: 'ai', note: 'LLM workflows' },
-  { name: 'OpenAI API', mark: 'AI', group: 'ai', note: 'Generative features' },
-  { name: 'Docker', mark: 'D', group: 'workflow', note: 'Repeatable setups' },
-  { name: 'Git & GitHub', mark: 'G', group: 'workflow', note: 'Versioned builds' },
-  { name: 'Prisma', mark: 'P', group: 'workflow', note: 'Data access' },
+const technologies: { name: string; icon: string; group: TechGroup; note: string; monochrome?: boolean }[] = [
+  { name: 'TypeScript', icon: 'typescript', group: 'frontend', note: 'Typed interfaces' },
+  { name: 'React', icon: 'react', group: 'frontend', note: 'Component systems' },
+  { name: 'Next.js', icon: 'nextdotjs', group: 'frontend', note: 'Web applications', monochrome: true },
+  { name: 'Three.js', icon: 'threedotjs', group: 'frontend', note: 'Interactive worlds', monochrome: true },
+  { name: 'Node.js', icon: 'nodedotjs', group: 'backend', note: 'Server-side tools' },
+  { name: 'PostgreSQL', icon: 'postgresql', group: 'backend', note: 'Relational data' },
+  { name: 'SQLite', icon: 'sqlite', group: 'backend', note: 'Embedded storage', monochrome: true },
+  { name: 'Socket.io', icon: 'socketdotio', group: 'backend', note: 'Real-time systems', monochrome: true },
+  { name: 'Python', icon: 'python', group: 'ai', note: 'Prototypes to production' },
+  { name: 'NLP', icon: 'nlp', group: 'ai', note: 'Language technology' },
+  { name: 'LangChain', icon: 'langchain', group: 'ai', note: 'LLM workflows' },
+  { name: 'OpenAI API', icon: 'ai-orbit', group: 'ai', note: 'Generative features' },
+  { name: 'Docker', icon: 'docker', group: 'workflow', note: 'Repeatable setups' },
+  { name: 'Git & GitHub', icon: 'github', group: 'workflow', note: 'Versioned builds', monochrome: true },
+  { name: 'Prisma', icon: 'prisma', group: 'workflow', note: 'Data access', monochrome: true },
 ];
 
 export default function Skills() {
@@ -78,7 +79,16 @@ export default function Skills() {
                 key={technology.name}
                 style={{ '--reveal-delay': `${(index % 5) * 45}ms` } as CSSProperties}
               >
-                <span className="tech-orb"><span>{technology.mark}</span></span>
+                <span className="tech-orb">
+                  <Image
+                    className={`tech-logo${technology.monochrome ? ' is-monochrome' : ''}`}
+                    src={`/portfolio-website/images/toolbox/${technology.icon}.svg`}
+                    alt=""
+                    aria-hidden="true"
+                    width={38}
+                    height={38}
+                  />
+                </span>
                 <span className="tech-name">{technology.name}</span>
                 <span className="tech-note">{technology.note}</span>
               </article>
